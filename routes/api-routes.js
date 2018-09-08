@@ -1,6 +1,8 @@
 var db = require('../models');
 
 module.exports = function(app) {
+    //Burger Routes
+    
     //CREATE
     app.post('/api/burgers', function(req, res) {
         db.Burger.create({
@@ -49,4 +51,60 @@ module.exports = function(app) {
             return res.status(404).end();
         });
     });
-}
+
+    //Customer Routes
+
+    //READ all customers for main customer page
+    app.get('/', function(req, res) {
+        db.Customer.findAll({}).then(function(result) {
+            var handlebarsObj = {
+                customers: result
+            }
+            res.render('customer-index', handlebarsObj)
+        }); 
+    });
+    //READ all customers and return json
+    //for the customer name selector on the 
+    //index.handlebars (main burger page)
+    app.get('/api/customers', function(req, res) {
+        db.Customer.findAll({}).then(function(result) {
+            res.json(result);
+        }).catch(function(error) {
+            return res.status(404).end();
+        });
+    });
+    //DELETE
+    app.delete('/api/customers/:id', function(req, res) {
+        db.Customer.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then(function(result) {
+            return res.status(200).end();
+        }).catch(function(error) {
+            return res.status(404).end();
+        });
+    });
+    //POST
+    //add new customer
+    app.post('/api/customers', function(req, res) {
+        db.Customer.create(req.body).then(function(result) {
+            return res.status(200).end();
+        }).catch(function(error) {
+            return res.status(404).end();
+        });
+    });
+    //PUT
+    //update customer
+    app.put('/api/customers/:id', function(req, res) {
+        db.Customer.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        }).then(function(result) {
+            return res.status(200).end();
+        }).catch(function(error) {
+            return res.status(404).end();
+        })
+    })
+};

@@ -16,3 +16,7 @@
 .burger-item {
     list-style-type: none;
 }
+
+.new-name {
+    display: none;
+}

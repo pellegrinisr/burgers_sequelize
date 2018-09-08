@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="jumbotron bg-dark">
+        <h1 class="text-light">Eat the Burger</h1>
+        <p class="lead text-light">Manage Customers</p>
+    </div>
+    <div class="row">
+        <div class="col-lg">
+            <h3><a href="/api/burgers">Order a Burger</a></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Customers</h2>
+            <ul>
+                {{#each customers}}
+                    <div>ID: {{id}}</div>    
+                    <div>Name: {{customer_name}}
+                        <span class="new-name pl-5" id="new-name-{{id}}">New Name: 
+                            <input type="text" class="mb-2 form-control-inline name-string" id="input-{{id}}">
+                            <button type="button" class="new-name-button btn btn-sm btn-primary" data-id="{{id}}">Submit</button>
+                        </span>
+                    </div>          
+                    <button type="button" class="btn btn-sm btn-danger delete-customer" data-delete-id="{{id}}">Delete Customer</button>
+                    <button type="button" class="btn btn-sm btn-secondary update-customer" data-update-id="{{id}}">Edit Customer</button> 
+                    
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Add a Customer</h2>
+            <form id="new-customer-form">
+                <div class="form-group">
+                    <label for="customer-name">Customer Name:</label>
+                    <input class="form-control" type="text" id="customer-name" placeholder="Required">
+                </div>
+                <button class="btn btn-md btn-success submit-btn" type="submit">Submit</button>
+            </form>
+        </div>      
+    </div>
+</div>

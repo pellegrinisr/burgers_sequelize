@@ -1,4 +1,19 @@
 $(document).ready(function() {
+    var customerSelect = $('#customer');
+
+    $.get('/api/customers', function(data) {
+        var customerRows = [];
+        for (var i = 0; i < data.length; i++) {
+            var customer = data[i];
+            var listOption = $("<option>");
+            listOption.attr("value", customer.id);
+            listOption.text(customer.customer_name);
+            customerRows.push(listOption);
+        }
+        customerSelect.empty();
+        customerSelect.append(customerRows);
+    });
+
     console.log('document ready');
     $('#create-form').on('submit', function(event) {
         event.preventDefault();
