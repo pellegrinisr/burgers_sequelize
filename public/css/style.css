@@ -20,3 +20,8 @@
 .new-name {
     display: none;
 }
+
+.error-message {
+    display: none;
+    color: red;
+}

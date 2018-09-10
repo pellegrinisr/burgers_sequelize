@@ -7,6 +7,10 @@ $(document).ready(function() {
             url: '/api/customers/' + id
         }).then(function(data) {
             window.location.href = '/';
+            $('#error-' + id).hide();
+        }).catch(function(error) {
+            console.log(error);
+            $("#error-" + id).show();
         });
     });
 

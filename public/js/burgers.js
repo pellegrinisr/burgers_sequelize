@@ -17,20 +17,25 @@ $(document).ready(function() {
     console.log('document ready');
     $('#create-form').on('submit', function(event) {
         event.preventDefault();
+        
+        console.log('created');
         if (!$('#burger-name').val() || !$('#image-url').val()) {
             alert('name and image url cannot be blank');
         } else {
             var newBurger = {
                 burger_name: $('#burger-name').val().trim(),
                 devoured: false,
-                image_url: $('#image-url').val().trim()
+                image_url: $('#image-url').val().trim(),
+                CustomerId: customerSelect.val()
             };
+            console.log(newBurger);
             $.ajax('/api/burgers', {
                 type: 'POST',
                 data: newBurger
             }).then(function() {
                 console.log('created new burger', newBurger.name);
                 location.reload();
+
             });
             $('#burger-name').val('');
             $('#image-url').val('');
@@ -40,12 +45,12 @@ $(document).ready(function() {
     $('.change-devour').on('click', function(event){
         var isDevoured = $(this).data('devoured');
         var id = $(this).data('id');
-        var state = {devoured: isDevoured};
+        var state = {devoured: !isDevoured};
         $.ajax('/api/burgers/' + id, {
             type: 'PUT',
             data: state
         }).then(function() {
-            console.log('changed devoured to', isDevoured);
+            console.log('changed devoured to', !isDevoured);
             location.reload();
         });
     });

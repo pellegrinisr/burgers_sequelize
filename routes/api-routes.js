@@ -8,19 +8,22 @@ module.exports = function(app) {
         db.Burger.create({
             burger_name: req.body.burger_name,
             devoured: req.body.devoured,
-            image_url: req.body.image_url
+            image_url: req.body.image_url,
+            CustomerId: req.body.CustomerId
         }).then(function(result) {
-            res.status(200).end();
+            return res.status(200).end();
         }).catch(function(error) {
             return res.status(404).end();
         });
     });
     //READ
     app.get('/api/burgers', function(req, res) {
+        debugger;
         db.Burger.findAll({}).then(function(result) {
             var handlebarsObj = {
                 burgers: result
-            }
+            };
+            console.log(handlebarsObj);
             res.render('index', handlebarsObj);
         });
     });
@@ -82,7 +85,8 @@ module.exports = function(app) {
         }).then(function(result) {
             return res.status(200).end();
         }).catch(function(error) {
-            return res.status(404).end();
+            console.log(error);
+            return res.status(500).end();
         });
     });
     //POST
